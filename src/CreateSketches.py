@@ -5,13 +5,24 @@ import numpy as np
 import pandas as pd
 from fbpca import pca
 from geosketch import gs
+import os
 
 # sketch size
 sk_sz = 0.2
 
+# more robust file paths
+currdir = os.path.dirname(__file__)
+
 # read in input matrix
-matAll = pd.read_csv("../data/test-normalized-matrix.txt")
+matAll = pd.read_csv(currdir + "/../data/test-normalized-matrix.txt")
 cans = set(matAll.loc[matAll["type"] == "cancer", "tissue.cancer"].tolist())
+
+# make relevant directory structure
+if not os.path.exists(currdir + "/../results"):
+    os.makedirs(currdir + "/../results")
+
+if not os.path.exists(currdir + "/../results/sketches"):
+    os.makedirs(currdir + "/../results/sketches")
 
 # iterate through the cancer types to make sketches
 for can in cans:
@@ -49,7 +60,7 @@ for can in cans:
     red_with_labs = pd.merge(pca_out, reduced, how="inner", on=list(reduced.columns.values))
     selected = list(red_with_labs["dataset"])
 
-    out = open("../results/sketches/" + can.lower().replace(" ", "-") + "-sketch.txt", "w")
+    out = open(currdir + "/../results/sketches/" + can.lower().replace(" ", "-") + "-sketch.txt", "w")
     for elm in selected:
         out.write(elm + "\n")
     out.close()
