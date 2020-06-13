@@ -3,4 +3,4 @@ data/compartments-plasma-membrane-conf3.txt
 data/combat-rnaseq-tm-clin-backcompatible.RData
 data/combat-rnaseq-tm-clin-clean.RData
 src/BuildTestSet.R
-results/sketches/*.txt
+results/
