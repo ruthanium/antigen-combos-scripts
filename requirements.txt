@@ -1,0 +1,4 @@
+numpy==1.18.5
+pandas==1.0.4
+fbpca==1.0
+geosketch==1.0
