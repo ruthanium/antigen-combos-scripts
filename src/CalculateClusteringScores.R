@@ -8,11 +8,6 @@
 library(parallel)
 library(data.table)
 
-library(clusterSim)
-library(ggplot2)
-library(cluster)
-library(clusterCrit)
-
 # start with data.table of dataset x gene expression values
 rnaseqmat = fread("data/test-normalized-matrix.txt")
 rnaseqmat = as.data.table(rnaseqmat) # make sure it is data.table and not data.frame
@@ -31,15 +26,43 @@ setattr(singles, 'names', cans)
 singles = rbindlist(singles, use.names=T, fill=T, idcol=T)
 names(singles) = c("can", "combo", "db", "dist.man", "ttype")
 
+# label clinicals vs novels
+singles[, lab := "N"]
+singles[combo %in% clinical,]$lab = "C"
 
-# label clinicals vs novels and remove Ls
 saveRDS(singles, "results/singles.RData")
 
-# load in the sketches
-sketchLAll = rbindlist(lapply(cans,
-                              function(cn) data.table(can=cn,
-                                                      dataset=readLines(paste0("results/sketches/", gsub(" ", "-", tolower(cn)), "-sketch.txt")))))
+tr = T # do test runs aka smaller subset of pairs and triples for now?
 
+# calculate clustering scores for doubles
+doubles = (mclapply(cans, calcClustMetrics, mat=rnaseqmat, testRun=tr, mc.cores=2))
+setattr(doubles, 'names', cans)
+doubles = rbindlist(doubles, use.names=T, fill=T, idcol=T)
+names(doubles) = c("can", "combo", "db", "dist.man", "ttype")
+
+# label clinicals vs novels
+doubles[, c("gene1", "gene2") := tstrsplit(combo, ":", fixed=TRUE)]
+doubles[, g1lab := ifelse(gene1 %in% clinical, "C", "N")]
+doubles[, g2lab := ifelse(gene2 %in% clinical, "C", "N")]
+doubles[, lab := paste0(g1lab, ":", g2lab)]
+
+saveRDS(doubles, "results/doubles.RData")
+
+# calculate clustering scores for triples
+singfilt = singles[db <= 5 & dist.man > 2,] # reduction to top performing singles
+triples = (mclapply(cans, calcClustMetricsTriples, mat=rnaseqmat, singles=singfilt, testRun=tr, mc.cores=2))
+setattr(triples, 'names', cans)
+triples = rbindlist(triples, use.names=T, fill=T, idcol=T)
+names(triples) = c("can", "combo", "db", "dist.man", "ttype")
+
+# label clinicals vs novels
+triples[, c("gene1", "gene2", "gene3") := tstrsplit(combo, ":", fixed=TRUE)]
+triples[, g1lab := ifelse(gene1 %in% clinical, "C", "N")]
+triples[, g2lab := ifelse(gene2 %in% clinical, "C", "N")]
+triples[, g3lab := ifelse(gene3 %in% clinical, "C", "N")]
+triples[, lab := paste0(g1lab, ":", g2lab, ":", g3lab)]
+
+saveRDS(triples, "results/triples.RData")
 
 
 

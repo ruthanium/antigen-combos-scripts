@@ -23,6 +23,7 @@ calcscoresingle <- function(row, dtt, target)
   cm = as.matrix(cm)
   cent = dist(cm, method="manhattan")[1]
   
+  # get H/L type
   fl = "H"
   if (as.numeric(cm[1,]) > as.numeric(cm[2,]))
   {
@@ -30,6 +31,83 @@ calcscoresingle <- function(row, dtt, target)
   }
   
   return (list(pair=g, db, cent, fl))
+}
+
+# function called by calcClustMetrics
+# does the work of calculating the clustering
+# scores for an antigen pair
+calcscore <- function(row, dtt, target)
+{ 
+  dtt = as.data.table(dtt)
+  genes = c(as.character(row["V1"]), as.character(row["V2"]))
+  
+  # get cluster values per pair
+  tmp = dtt[,c(genes[1], genes[2], "tissue.cancer"), with=F]
+  tmp$target = ifelse(tmp$tissue.cancer == target, "target", "other")
+  clust <- ifelse(tmp$target == "target", 1, 2)
+  m = as.matrix(tmp[,1:2, with=FALSE])
+  mode(m) = "numeric"
+  db = index.DB.fixed(m, as.integer(clust), centrotypes = "centroids", p=1)$DB
+  cm = colMeans(tmp[target == "other",1:2, with=F])
+  cm = rbind(cm, colMeans(tmp[target == "target",1:2, with=F]))
+  row.names(cm) = NULL
+  cm = as.matrix(cm)
+  cent = dist(cm, method="manhattan")[1]
+  
+  # get type (HH, HL / LH, LL)
+  fl = "H"
+  sl = "H"
+  if (as.numeric(cm[1,1]) > as.numeric(cm[2,1]))
+  {
+    fl = "L"
+  }
+  if (as.numeric(cm[1,2]) > as.numeric(cm[2,2]))
+  {
+    sl = "L"
+  }
+  
+  return (list(pair=paste(genes[1], genes[2], sep=":"), db, cent, paste0(fl, sl)))
+}
+
+# function called by calcClustMetricsTriples
+# does the work of calculating the clustering
+# scores for an antigen pair
+calcscoretriplets <- function(row, dtt, target) 
+{
+  dtt = as.data.table(dtt)
+  genes = c(as.character(row["V1"]), as.character(row["V2"]), as.character(row["V3"]))
+  
+  # get cluster values per triple
+  tmp = dtt[,c(genes[1], genes[2], genes[3], "tissue.cancer"), with=F]
+  tmp$target = ifelse(tmp$tissue.cancer == target, "target", "other")
+  clust <- ifelse(tmp$target == "target", 1, 2)
+  m = as.matrix(tmp[,1:3, with=FALSE])
+  mode(m) = "numeric"
+  db = index.DB.fixed(m, as.integer(clust), centrotypes = "centroids", p=1)$DB
+  cm = colMeans(tmp[target == "other",1:3, with=F])
+  cm = rbind(cm, colMeans(tmp[target == "target",1:3, with=F]))
+  row.names(cm) = NULL
+  cm = as.matrix(cm)
+  cent = dist(cm, method="manhattan")[1]
+  
+  # get type (HHH, LLL, HLL, LHH, etc)
+  fl = "H"
+  sl = "H"
+  en = "H"
+  if (as.numeric(cm[1,1]) > as.numeric(cm[2,1]))
+  {
+    fl = "L"
+  }
+  if (as.numeric(cm[1,2]) > as.numeric(cm[2,2]))
+  {
+    sl = "L"
+  }
+  if (as.numeric(cm[1,3]) > as.numeric(cm[2,3]))
+  {
+    en = "L"
+  }
+  
+  return (list(pair=paste(genes[1], genes[2], genes[3], sep=":"), db, cent, paste0(fl, sl, en)))
 }
 
 # takes a cancer (target) and the entire expression matrix
@@ -58,6 +136,73 @@ calcClustMetricsForSingles <- function(target, mat)
   
   return (res);
 }
+
+# takes a cancer (target) and the entire expression matrix
+# returns a data table of clustering scores for every possible antigen pair's
+# ability to separate target samples from all other normal tissue samples
+# uses only the samples in the sketch
+# db = Davies Bouldin, dist.man = Manhattan distance b/w the 
+# cluster centroids, ttype = whether gene is on (H) or off (L) in
+# the target
+calcClustMetrics <- function(target, mat, testRun=F)
+{
+  dt = mat[mat$type == "tissue" | mat$tissue.cancer == target,]
+  fn =  file(paste0("results/sketches/", gsub(" ", "-", tolower(target)) ,"-sketch.txt"))
+  sketch = readLines(fn)
+  close(fn)
+  
+  dt = dt[dataset %in% sketch,]
+  tmpc = names(dt)[2:ncol(dt)-2]
+  tmpc = tmpc[-1]
+  combos = as.data.frame(t(combn(tmpc, 2)))
+  rm(tmpc)
+  
+  if(testRun)
+  {
+    combos = combos[1:50,] 
+  }
+  
+  ares = apply(combos, 1, calcscore, dtt=dt, target=target)
+  res = do.call(rbind.data.frame, ares)
+  res = as.data.table(res)
+  names(res) = c("combo", "db", "dist.man", "ttype")
+  
+  return (res);
+}
+
+# takes a cancer (target) and the entire expression matrix
+# returns a data table of clustering scores for an antigen triplet's
+# ability to separate target samples from all other normal tissue samples
+# uses only the samples in the sketch
+# the input singles data narrows down the total number of triples
+# by keeping only ones that show some minimum potential per tumor type
+# db = Davies Bouldin, dist.man = Manhattan distance b/w the 
+# cluster centroids, ttype = whether gene is on (H) or off (L) in
+# the target
+calcClustMetricsTriples <- function(target, mat, singles, testRun=F)
+{
+  dt = mat[mat$type == "tissue" | mat$tissue.cancer == target,]
+  fn =  file(paste0("results/sketches/", gsub(" ", "-", tolower(target)) ,"-sketch.txt"))
+  sketch = readLines(fn)
+  close(fn)
+  
+  dt = dt[dataset %in% sketch,]
+  sn = singles[can==target,]
+  combos = as.data.frame(t(combn(as.character(sn$combo), 3)))
+  
+  if(testRun)
+  {
+    combos = combos[1:50,] 
+  }
+  
+  ares = apply(combos, 1, calcscoretriplets, dtt=dt, target=target)
+  res = do.call(rbind.data.frame, ares)
+  res = as.data.table(res)
+  names(res) = c("combo", "db", "dist.man", "ttype")
+  
+  return (res);
+}
+
 
 # taken from the ClusterSim R package
 # but their davies bouldin implementation had
