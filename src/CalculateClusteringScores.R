@@ -21,7 +21,7 @@ tm = fread("data/transmembrane-genes.txt", header=F) # already contains the clin
 tm = tm$V1
 
 # calculate clustering scores for single antigens
-singles = (mclapply(cans, calcClustMetricsForSingles, mat=rnaseqmat, mc.cores=2))
+singles = (mclapply(cans, calcClustMetricsForSingles, mat=rnaseqmat, mc.cores=length(cans)))
 setattr(singles, 'names', cans)
 singles = rbindlist(singles, use.names=T, fill=T, idcol=T)
 names(singles) = c("can", "combo", "db", "dist.man", "ttype")
@@ -35,7 +35,7 @@ saveRDS(singles, "results/singles.RData")
 tr = T # do test runs aka smaller subset of pairs and triples for now?
 
 # calculate clustering scores for doubles
-doubles = (mclapply(cans, calcClustMetrics, mat=rnaseqmat, testRun=tr, mc.cores=2))
+doubles = (mclapply(cans, calcClustMetrics, mat=rnaseqmat, testRun=tr, mc.cores=length(cans)))
 setattr(doubles, 'names', cans)
 doubles = rbindlist(doubles, use.names=T, fill=T, idcol=T)
 names(doubles) = c("can", "combo", "db", "dist.man", "ttype")
@@ -50,7 +50,7 @@ saveRDS(doubles, "results/doubles.RData")
 
 # calculate clustering scores for triples
 singfilt = singles[db <= 5 & dist.man > 2,] # reduction to top performing singles
-triples = (mclapply(cans, calcClustMetricsTriples, mat=rnaseqmat, singles=singfilt, testRun=tr, mc.cores=2))
+triples = (mclapply(cans, calcClustMetricsTriples, mat=rnaseqmat, singles=singfilt, testRun=tr, mc.cores=length(cans)))
 setattr(triples, 'names', cans)
 triples = rbindlist(triples, use.names=T, fill=T, idcol=T)
 names(triples) = c("can", "combo", "db", "dist.man", "ttype")

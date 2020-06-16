@@ -286,3 +286,140 @@ index.DB.fixed <- function(x,cl,d=NULL,centrotypes="centroids",p=2,q=2){
   resul
 }
 
+# *****************************
+#       Eval functions
+# *****************************
+
+# takes a tumor type (cn), genes, expression data and
+# returns evaluation metrics using decision trees
+assignClusterLabels <- function(cn, genes, dt)
+{
+  # get the sketch subset
+  fn =  file(paste0("results/sketches/", gsub(" ", "-", tolower(cn)) ,"-sketch.txt"))
+  sketch = readLines(fn)
+  close(fn)
+  
+  train = dt[dataset %in% sketch,] # training set
+  train = train[train$type == "tissue" | train$tissue.cancer == cn,]
+  train[, "target" := ifelse(train$tissue.cancer == cn, "target", "other")]
+  
+  test = dt[!(dataset %in% sketch),] # test set for eval
+  test = test[test$type == "tissue" | test$tissue.cancer == cn,]
+  test[, "target" := ifelse(test$tissue.cancer == cn, "target", "other")]
+  
+  if(length(genes) == 1) # single gene case
+  {
+    train = train[,c(genes[1], "tissue.cancer", "target"), with =F]
+    test = test[,c(genes[1], "tissue.cancer", "target"), with=F]
+    
+    test[, clustlab := assignDT(test[,1, with=F], train, T)] # run the DTs
+  }
+  
+  if (length(genes) == 2) # double
+  {
+    train = train[,c(genes[1], genes[2], "tissue.cancer", "target"), with =F]
+    test = test[,c(genes[1], genes[2], "tissue.cancer", "target"), with=F]
+    
+    test[, clustlab := assignDT(test[,1:2, with=F], train, F)] # run the DTs
+  }
+  
+  if (length(genes) == 3) # triple
+  {
+    train = train[,c(genes[1], genes[2], genes[3], "tissue.cancer", "target"), with =F]
+    test = test[,c(genes[1], genes[2], genes[3], "tissue.cancer", "target"), with=F]
+    
+    test[, clustlab := assignDT(test[,1:3, with=F], train, F)]
+  }
+  
+  # calc performance metrics  
+  tp = length(test[target == "target" & clustlab == "target",]$clustlab)
+  tn = length(test[target == "other" & clustlab == "other",]$clustlab)
+  fp = length(test[target == "other" & clustlab == "target",]$clustlab)
+  
+  prec = tp / (tp + fp) # precision = tp / (tp + fp)
+  rec = tp / length(test[target=="target",]$clustlab) # recall = tp / total number of positives (fn) 
+  f1 = (2 * prec * rec) / (prec + rec)
+  
+  return(list(F1=f1, prec=prec, recall=rec))
+}
+
+# use decision tree boundaries on the training data
+# to evaluate performance on the test set
+assignDT <- function(test, train, single)
+{
+  ctmp = train
+  if(single) # if single gene
+  {
+    names(ctmp) = c("g1", "tissue.cancer", "target")
+    ctmp[, y := ifelse(target == "target", 1, -1)]
+    ctmp$y = as.factor(ctmp$y)
+    
+    names(test) = c("g1")
+    
+    dt = rpart(y ~ g1, method="class", data=ctmp[,c("g1", "y")], cp=-1, maxdepth=1)
+    test$prediction = predictOnSplits(test$g1, dt$splits[4], dt$splits[2])   
+  }
+  else
+  {
+    if (length(names(ctmp)) == 4) # double
+    {
+      names(ctmp) = c("g1", "g2", "tissue.cancer", "target")
+      ctmp[, y := ifelse(target == "target", 1, -1)]
+      ctmp$y = as.factor(ctmp$y)
+      
+      names(test) = c("g1", "g2")
+      
+      dt = rpart(y ~ g1, method="class", data=ctmp[,c("g1", "y")], cp=-1, maxdepth=1)
+      test$pg1 = predictOnSplits(test$g1, dt$splits[4], dt$splits[2])
+      
+      dt = rpart(y ~ g2, method="class", data=ctmp[,c("g2", "y")], cp=-1, maxdepth=1)
+      test$pg2 = predictOnSplits(test$g2, dt$splits[4], dt$splits[2])
+      
+      test[, prediction := pmin(pg1, pg2)]
+      
+    }
+    else # triple
+    {
+      names(ctmp) = c("g1", "g2", "g3", "tissue.cancer", "target")
+      ctmp[, y := ifelse(target == "target", 1, -1)]
+      ctmp$y = as.factor(ctmp$y)
+      
+      names(test) = c("g1", "g2", "g3")
+      
+      dt = rpart(y ~ g1, method="class", data=ctmp[,c("g1", "y")], cp=-1, maxdepth=1)
+      test$pg1 = predictOnSplits(test$g1, dt$splits[4], dt$splits[2])
+      
+      dt = rpart(y ~ g2, method="class", data=ctmp[,c("g2", "y")], cp=-1, maxdepth=1)
+      test$pg2 = predictOnSplits(test$g2, dt$splits[4], dt$splits[2])
+      
+      dt = rpart(y ~ g3, method="class", data=ctmp[,c("g3", "y")], cp=-1, maxdepth=1)
+      test$pg3 = predictOnSplits(test$g3, dt$splits[4], dt$splits[2])
+      
+      test[, prediction := pmin(pg1, pg2, pg3)]
+      
+    }
+  }
+  clusters <- ifelse(test$prediction >= 1, "target", "other")
+  return (clusters)
+}
+
+# use the cutoff line to predict
+# label of tumor vs normal
+predictOnSplits <- function(x, cutoff, ncat)
+{
+  if (is.null(cutoff))
+  {
+    return(NA)
+  }
+  pred = ifelse(x < cutoff, 1, -1)
+  if (ncat == -1) # greater than
+  {
+    pred = ifelse(x > cutoff, 1, -1)
+  }
+  return (pred)
+}
+
+
+
+
+
