@@ -419,6 +419,23 @@ predictOnSplits <- function(x, cutoff, ncat)
   return (pred)
 }
 
+# *****************************
+#       Analysis functions
+# *****************************
+
+# takes a data.table of scores and scales both the DB 
+# and distance into a single clustering score that ranges
+# from 0 to 1 based on the distribution in the data.table
+# returns a data.table now sorted by these values
+cleanAndScale <- function(dt)
+{
+  dt = dt[!is.na(db)] # remove NA values
+  dt[,dbscaled := 1-((log(db) - min(log(db)))/(max(log(db)) - min(log(db))))] # make score between 0 and 1
+  dt[,distscaled := (log(dist.man) - min(log(dist.man)))/(max(log(dist.man)) - min(log(dist.man)))]
+  dt[,score := apply(dt[,c("dbscaled", "distscaled"), with=F], 1, min)]
+  
+  return (dt[order(-score),]) 
+}
 
 
 

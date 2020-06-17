@@ -14,5 +14,6 @@ Dannenfelser R, Allen G, VanderSluis B, Koegel AK, Levinson S, Stark SR, Yao V, 
    - should be log transformed values
 3. Build sketches with `CreateSketches.py` (need to make sure env correct - python 3, requirements.txt etc)
 4. load all R functions - `Functions.R`
-5. Calculate clustering-based scores for singles, doubles, and triples `CalculateClusteringScores.R`
-6. Run DT evaluations (calculate F1, precision, recall) - `Evaluate.R`
+5. Calculate clustering-based scores for singles, doubles, and triples `CalculateClusteringScores.R` (warning: on large datasets this can take several days to weeks to complete)
+6. Run DT evaluations (calculate F1, precision, recall) - `Evaluate.R` (warning on large datasets this will take several days to weeks to complete)
+7. `Analyze.R` - process the top results and build corresponding figures
