@@ -191,7 +191,7 @@ wilcox.test(f1 ~ lab, data=tmp[lab %in% c("C:N", "N:N"),])$p.value
 
 rm(tmp)
 
-# best C to best pair (score)
+# best C to best pair (f1)
 df1 = df[category == "single" & lab =="C",]
 df2 = df[category == "double",]
 df3 = df[category == "triple",]
@@ -210,18 +210,17 @@ maxPairs[,category.x := NULL]
 maxPairs[,category.y := NULL]
 maxPairs[,category := NULL]
 
-# best C pair to best double
 maxPairs$can <- factor(maxPairs$can, levels=rev(unique(maxPairs[order(-f1.y), ]$can)))
-ggplot(maxPairs) + geom_segment(aes(x=can, xend=can, y=score.x, yend=f1.y), size=1.5, color="#dadfe3") +
+ggplot(maxPairs) + geom_segment(aes(x=can, xend=can, y=f1.x, yend=f1.y), size=1.5, color="#dadfe3") +
   geom_point(aes(x=can, y=f1.y), color="#16a085", size=2 ) +
   geom_point(aes(x=can, y=f1.x), color="#8e44ad", size=2 ) + xlab("") + ylab("F1") + 
   scale_x_discrete(label=function(x) abbreviate(x, minlength=15)) + coord_flip() + theme_minimal()
 
 # 2D plot
-makeScatterPlot("Glioblastoma Multiforme", c("OR4F5", "SLC2A5"), rnaseqmat, T)
+makeScatterPlot("Skin Cutaneous Melanoma", c("MSLN", "MLANA"), rnaseqmat, F)
 
 # 3D plot 
-make3DPlots("Glioblastoma Multiforme", c("SLC2A5", "CLCNKA", "EPCAM"), rnaseqmat)
+make3DPlots("Uveal Melanoma", c("MLANA", "AXL", "KISS1R"), rnaseqmat)
 
 # tradeoff of increasing number of antigens in the combination
 df2 = melt(df[,c("combo", "can", "category", "prec", "rec")], id.vars=c("combo", "can", "category"))
@@ -265,8 +264,9 @@ for(gene in Ncounts$gene)
                 matrix.type = "bipartite",
                 ignore.eval = FALSE,
                 names.eval = "weights")
-  ggnet2(net, size = 4, color = "mode", label = TRUE, label.size = 5, edge.label = "weights", edge.size = "weights", palette=col) + ggtitle(gene)
-  
+  ggn = ggnet2(net, size = 4, color = "mode", label = TRUE, label.size = 5, edge.label = "weights", edge.size = "weights", palette=col) + ggtitle(gene)
+  print(ggn)  
+
 }
 Ncounts[,tc := 1]
 Ncounts$tc = totcan

@@ -8,6 +8,8 @@
 library(parallel)
 library(data.table)
 
+tr = F # if true, test run (limit number of doubles and triples calculated) 
+
 # start with data.table of dataset x gene expression values
 rnaseqmat = fread("data/test-normalized-matrix.txt")
 rnaseqmat = as.data.table(rnaseqmat) # make sure it is data.table and not data.frame
@@ -31,8 +33,6 @@ singles[, lab := "N"]
 singles[combo %in% clinical,]$lab = "C"
 
 saveRDS(singles, "results/singles.RData")
-
-tr = T # do test runs aka smaller subset of pairs and triples for now?
 
 # calculate clustering scores for doubles
 doubles = (mclapply(cans, calcClustMetrics, mat=rnaseqmat, testRun=tr, mc.cores=length(cans)))

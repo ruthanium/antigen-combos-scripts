@@ -14,6 +14,6 @@ Dannenfelser R, Allen G, VanderSluis B, Koegel AK, Levinson S, Stark SR, Yao V, 
    - should be log transformed values
 3. Build sketches with `CreateSketches.py` (need to make sure env correct - python 3, requirements.txt etc)
 4. load all R functions - `Functions.R`
-5. Calculate clustering-based scores for singles, doubles, and triples `CalculateClusteringScores.R` (warning: on large datasets this can take several days to weeks to complete)
-6. Run DT evaluations (calculate F1, precision, recall) - `Evaluate.R` (warning on large datasets this will take several days to weeks to complete)
+5. Calculate clustering-based scores for singles, doubles, and triples `CalculateClusteringScores.R` (warning: on large datasets this may take several days to weeks to complete) the `tr` short for test run variable reduces time by limiting the total number of combinations and triples. By default it is set to `true`, but set to `false` to run on the much larger set of all combinations.
+6. Run DT evaluations (calculate F1, precision, recall) - `Evaluate.R` (warning on large datasets this may take several days to weeks to complete)
 7. `Analyze.R` - process the top results and build corresponding figures
