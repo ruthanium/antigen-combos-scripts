@@ -8,11 +8,11 @@ Dannenfelser R, Allen G, VanderSluis B, Koegel AK, Levinson S, Stark SR, Yao V, 
 <!-- (DOI badge for later?[![DOI](https://zenodo.org/badge/126377943.svg)](https://zenodo.org/badge/latestdoi/126377943)) -->
 
 ### Usage
-Due to size contraints, this repository contains expression data for a subset of the genes analyzed in the paper. However it is easy to extend these scripts by processing an input gene expression matrix using the same format of the sample matrix `data/test-normalized-matrix.txt`, with genes as columns and samples as rows. In addition to genes, be sure to have a `dataset` column with unique identifiers, a `type` column with values of either `cancer` or `normal`, and a `tissue.cancer` column with a more specific sample label such as the type of cancer (e.g., `Glioblastoma Multiforme`) or the tissue type(e.g., `Adipose Tissue`).
+Due to size contraints, this repository contains expression data for a subset of the genes analyzed in the paper. However it is easy to extend these scripts by processing an input gene expression matrix using the same format of the sample matrix `data/test-normalized-matrix.txt`, with genes as columns and samples as rows. In addition to genes, be sure to have a `dataset` column with unique identifiers, a `type` column with values of either `cancer` or `normal`, and a `tissue.cancer` column with a more specific sample label such as the type of cancer (e.g., `Glioblastoma Multiforme`) or the tissue type (e.g., `Adipose Tissue`).
 
-To build the version used in the paper, download the latest release of RNAseq data from [TCGA](https://portal.gdc.cancer.gov/) and [GTEx](https://www.gtexportal.org/home/). Correct for batch effects using your favorite normalization scheme (we used COMBAT) and make sure the expression values are in log_2 space. In addition to genes, be sure to have a `dataset` column with unique identifiers, a `type` column with values of either `cancer` or `normal`, and a `tissue.cancer` column with a more specific sample label such as the type of cancer (e.g., `Glioblastoma Multiforme`) or the tissue type(e.g., `Adipose Tissue`).
+To build the version used in the paper, download the 2015 release of RNAseq data from [TCGA](https://portal.gdc.cancer.gov/) and version 6 of [GTEx](https://www.gtexportal.org/home/). Correct for batch effects using your favorite normalization scheme (we used COMBAT) and make sure the expression values are in log_2 space.
 
-#### Processing Pipeline
+#### Instructions
 1. Build the geometric sketches needed for the training and test sets:
    - setup a virtual environment and install relevant python packages (here we used conda)
    ```bash
