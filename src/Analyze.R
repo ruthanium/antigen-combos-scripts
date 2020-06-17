@@ -83,6 +83,7 @@ topDoublesNames = rbindlist(lapply(treeTypes, function(tt) {
         
         tmp.combo = append(tmp.combo, as.character(row$combo))
         tmp.can = append(tmp.can, as.character(row$can))
+        count = count + 1
       }
     }
     data.table(combo=tmp.combo, can=tmp.can)
@@ -153,6 +154,7 @@ topTriplesNames = rbindlist(lapply(treeTypes, function(ttree) {
           one = append(one, genes[3])
         }
         
+        count = count + 1
         tmp.combo = append(tmp.combo, as.character(row$combo))
         tmp.can = append(tmp.can, as.character(row$can))
       }
