@@ -437,6 +437,110 @@ cleanAndScale <- function(dt)
   return (dt[order(-score),]) 
 }
 
+# takes a cancer type, two genes, and a matrix of expression data
+# and constructs a 2D scatterplot with centroids highlighted for
+# all normal tissue types
+makeScatterPlot <- function(target, genes, mat, printToFile=F, jitta=T)
+{
+  tmp = as.data.frame(mat[,c(genes[1], genes[2], "tissue.cancer", "type"),with=F])
+  tmp$target = ifelse(tmp$tissue.cancer == target, "tumor", "normal")
+  tmp = tmp[tmp$target == "tumor" | (tmp$type == "tissue"),]
+  
+  if (jitta) # add jitter
+  {
+    tmp[,1] = jitter(ifelse(as.numeric(unlist(tmp[,1])) < 0, 0, as.numeric(unlist(tmp[,1]))), 0.001)
+    tmp[,2] = jitter(ifelse(as.numeric(unlist(tmp[,2])) < 0, 0, as.numeric(unlist(tmp[,2]))), 0.001)
+  }
+  
+  # calculate centroids
+  tmp2 = as.data.table(tmp)
+  names(tmp2) = c("g1", "g2", "tc", "type", "tar")
+  tmpagg <- tmp2[, .(g1 = mean(g1), g2 = mean(g2)), by=tc]
+  rm(tmp2)
+  names(tmpagg) <- c("tc", names(tmp)[1], names(tmp)[2])
+  tmpagg$target = ifelse(tmpagg$tc == target, "tumor", "normal2")
+  tmpagg = tmpagg[target != "tumor",]
+  
+  m = max(tmp[,1], tmp[,2]) # force square width
+  
+  splot = ggplot(tmp, aes_string(x=names(tmp)[1], y=names(tmp)[2])) +
+    geom_point(aes(color=target), alpha = 0.7) +
+    scale_color_manual(values=c("#c2c8ce", "#34495e", "#e74c3c", "#bdc3c7")) + 
+    geom_point(data=tmpagg, aes_string(x=names(tmp)[1], y=names(tmp)[2], colour="target"), size=2.5, alpha=1) +
+    geom_text_repel(data=tmpagg, aes(label=tc), size=3, box.padding = 0.25, 
+                    point.padding = 0.2, segment.color = 'grey50', segment.size = 0.25) +
+    scale_fill_manual(values=c("#34495e", "#e74c3c")) + 
+    ylim(0, m) + xlim(0, m) + theme_bw() + 
+    ylab(paste(names(tmp)[2], "log(TPM)")) + xlab(paste(names(tmp)[1], "log(TPM)")) + 
+    theme(axis.title = element_text(size=18), axis.text= element_text(size=16), panel.grid.minor=element_blank(),
+          plot.background=element_blank(), panel.background=element_blank(), panel.grid.major=element_blank()) +
+    guides(colour=F)
+  
+  if (printToFile)
+  {
+    ggsave(paste0("results/", genes[1], "-", genes[2], "-", gsub(" ", "-", tolower(target)), "-scatter.pdf"), 
+           splot, width=3.5, height=3.5, units="in", device="pdf", useDingbats=FALSE)
+  }
+  else
+  {
+    print(splot)
+  }
+}
+
+# takes a cancer type, three genes, and a matrix of expression data
+# and constructs a 3D scatterplot 
+make3DPlots <- function(target, genes, mat, jitta=F, save=F)
+{
+  tmp = as.data.frame(mat[,c(genes[1], genes[2], genes[3], "tissue.cancer", "type"),with=F])
+  tmp$target = ifelse(tmp$tissue.cancer == target, "tumor", "normal")
+  tmp = tmp[tmp$target == "tumor" | (tmp$type == "tissue"),]
+  
+  if (jitta) # add jitter?
+  {
+    tmp[,1] = jitter(ifelse(as.numeric(unlist(tmp[,1])) < 0, 0, as.numeric(unlist(tmp[,1]))), 0.001)
+    tmp[,2] = jitter(ifelse(as.numeric(unlist(tmp[,2])) < 0, 0, as.numeric(unlist(tmp[,2]))), 0.001)
+    tmp[,3] = jitter(ifelse(as.numeric(unlist(tmp[,3])) < 0, 0, as.numeric(unlist(tmp[,3]))), 0.001)
+  }
+  
+  # calculate the centroids
+  tmp2 = as.data.table(tmp)
+  names(tmp2) = c("g1", "g2", "g3", "tc", "type", "tar")
+  tmpagg <- tmp2[, .(g1 = mean(g1), g2 = mean(g2), g3 = mean(g3)), by=tc]
+  rm(tmp2)
+  tmpagg$tar = ifelse(tmpagg$tc == target, "tumor", "normal.centroid")
+  tmpagg = tmpagg[tar != "tumor",]
+  tmpagg[, sz := 3.5]
+  tmpagg[, opa := 1]
+  
+  names(tmp) = c("g1", "g2", "g3", "tc", "type", "tar")
+  tmp = as.data.table(tmp)
+  tmp[, type := NULL]
+  tmp[, sz := 3]
+  tmp[, opa := ifelse(target == "normal", 0.2, 0.7)]
+  
+  tmp = rbind(tmp, tmpagg)
+  
+  p <- plot_ly(tmp, x=~g1, y=~g2, z=~g3, type="scatter3d", mode="markers", 
+               color=~tar, colors=c("#c2c8ce","#34495e", "#e74c3c"), 
+               marker=list(size=5, opacity=0.5)) %>%
+    layout(
+      title = target,
+      scene = list(
+        xaxis = list(title = genes[1], tickfont = list(size=16), titlefont=list(size=24)),
+        yaxis = list(title = genes[2], tickfont = list(size=16), titlefont=list(size=24)),
+        zaxis = list(title = genes[3], tickfont = list(size=16), titlefont=list(size=24))
+      ))
+  
+  if(save)
+  {
+    htmlwidgets::saveWidget(p, paste0("results/",gsub(" ", "-", target), "-",genes[1], "-", genes[2], "-", genes[3],".html"))  
+  }
+  else
+  {
+    print(p)
+  }
+  
+}
 
 
 
