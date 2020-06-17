@@ -8,12 +8,27 @@ Dannenfelser R, Allen G, VanderSluis B, Koegel AK, Levinson S, Stark SR, Yao V, 
 <!-- (DOI badge for later?[![DOI](https://zenodo.org/badge/126377943.svg)](https://zenodo.org/badge/latestdoi/126377943)) -->
 
 ### Usage
-1. Need to gather TCGA and GTEx RSEM counts
-2. Combine using COMBAT or favorite batch correction scheme (matrix of sampleIDs by genes)
-   - first column (dataset (dataset specific identifier), last columns: batch (GTEx or TCGA), type (tissue or cancer), tissue.cancer( specific sample type e.g., colon cancer or adipose tissue))
-   - should be log transformed values
-3. Build sketches with `CreateSketches.py` (need to make sure env correct - python 3, requirements.txt etc)
-4. load all R functions - `Functions.R`
-5. Calculate clustering-based scores for singles, doubles, and triples `CalculateClusteringScores.R` (warning: on large datasets this may take several days to weeks to complete) the `tr` short for test run variable reduces time by limiting the total number of combinations and triples. By default it is set to `true`, but set to `false` to run on the much larger set of all combinations.
-6. Run DT evaluations (calculate F1, precision, recall) - `Evaluate.R` (warning on large datasets this may take several days to weeks to complete)
-7. `Analyze.R` - process the top results and build corresponding figures
+Due to size contraints, this repository contains expression data for a subset of the genes analyzed in the paper. However it is easy to extend these scripts by processing an input gene expression matrix using the same format of the sample matrix `data/test-normalized-matrix.txt`, with genes as columns and samples as rows. In addition to genes, be sure to have a `dataset` column with unique identifiers, a `type` column with values of either `cancer` or `normal`, and a `tissue.cancer` column with a more specific sample label such as the type of cancer (e.g., `Glioblastoma Multiforme`) or the tissue type(e.g., `Adipose Tissue`).
+
+To build the version used in the paper, download the latest release of RNAseq data from [TCGA](https://portal.gdc.cancer.gov/) and [GTEx](https://www.gtexportal.org/home/). Correct for batch effects using your favorite normalization scheme (we used COMBAT) and make sure the expression values are in log_2 space. In addition to genes, be sure to have a `dataset` column with unique identifiers, a `type` column with values of either `cancer` or `normal`, and a `tissue.cancer` column with a more specific sample label such as the type of cancer (e.g., `Glioblastoma Multiforme`) or the tissue type(e.g., `Adipose Tissue`).
+
+#### Processing Pipeline
+1. Build the geometric sketches needed for the training and test sets:
+   - setup a virtual environment and install relevant python packages (here we used conda)
+   ```bash
+   conda create -n antigen python=3.7
+   conda activate antigen
+   pip install -r requirements.txt
+   ```
+   - run `CreateSketches.py`
+   ```bash
+   python src/CreateSketches.py
+   ```
+   - once complete, sketch files should be constructed in `results/sketches` and the virtual environment is no longer necessary.
+2. The remaining steps will be in R. First, load all R functions in the  `Functions.R` file.
+3. Calculate clustering-based scores for singles, doubles, and triples with `CalculateClusteringScores.R`. Depending on your computational resources running on the sample file may take a while to complete. Considering setting the `tr` variable to `True` to further reduce the number of double and triple combinations computed for testing purposes.
+4. Run the decision tree evaluations in `Evaluate.R` to calculate performance metrics (F1, precision, recall). Like cluster score calculations, this script may take a long time to run based on your computing resources and the size of the starting dataset.
+5. Use `Analyze.R` to process the top results and conduct the analysis carried out in the paper.
+
+### User Agreement
+This code is free to use and modify for non-commerical use.
