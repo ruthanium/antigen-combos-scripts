@@ -31,4 +31,4 @@ To build the version used in the paper, download the 2015 release of RNAseq data
 5. Use `Analyze.R` to process the top results and conduct the analysis carried out in the paper.
 
 ### User Agreement
-This code is released under a [Clear BSD License](LICENSE.md) and is intended for research/academic use only. For commercial use, please contact: Laurie Tzodikov (Assistant Director, Office of Technology Licensing), Princeton University, 609-258-7256.
+This code is released under a [Clear BSD License](https://github.com/ruthanium/antigen-combos-scripts/blob/master/LICENSE) and is intended for research/academic use only. For commercial use, please contact: Laurie Tzodikov (Assistant Director, Office of Technology Licensing), Princeton University, 609-258-7256.
