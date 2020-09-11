@@ -3,8 +3,7 @@ This is a repository for the scripts used to do the analysis in the Dannenfelser
 
 ### Citation
 > Discriminatory power of combinatorial antigen recognition in cancer T cell therapies.
-Dannenfelser R, Allen G, VanderSluis B, Koegel AK, Levinson S, Stark SR, Yao V, Tadych A, Troyanskaya OG, Lim WA. FULL CITATION TO COME
-
+Dannenfelser R, Allen G, VanderSluis B, Koegel AK, Levinson S, Stark SR, Yao V, Tadych A, Troyanskaya OG, Lim WA. Cell Systems. 2020.[https://doi.org/10.1016/j.cels.2020.08.002](https://doi.org/10.1016/j.cels.2020.08.002)
 <!-- (DOI badge for later?[![DOI](https://zenodo.org/badge/126377943.svg)](https://zenodo.org/badge/latestdoi/126377943)) -->
 
 ### Usage
