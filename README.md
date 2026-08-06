@@ -1,5 +1,26 @@
-### _In silico_ Screening of Antigen Combinations
-This is a repository for the scripts used to do the analysis in the Dannenfelser et al. paper, _Discriminatory power of combinatorial antigen recognition in cancer T cell therapies_. Top predicted combinations can be viewed on our [antigen explorer](http://antigen.princeton.edu) webserver.
+# Antigen Combos
+
+Patient-aware single-cell discovery and validation of combinatorial
+tumor-associated antigen gates. The primary workflow supports:
+
+- biomarker-anchored partner discovery, including measured protein-positive
+  cell calls or an explicitly labeled RNA surrogate;
+- patient-separated discovery and held-out testing;
+- AND, OR, NOT, and three-input Boolean antigen gates;
+- malignant/normal epithelial coverage and patient prevalence;
+- cell-cluster decoding and marker expression-level reports;
+- independent validation in the ICBI colorectal cancer atlas; and
+- corrected comparison with the original PCASA gate calculations.
+
+The main CRC results and validation reports are versioned under `results/`.
+Downloaded single-cell matrices and API caches remain excluded because of
+their size.
+
+This repository builds on the scripts used for the Dannenfelser et al. paper,
+_Discriminatory power of combinatorial antigen recognition in cancer T cell
+therapies_. The original TCGA/GTEx bulk-expression workflow is retained as
+legacy/reference functionality, while the newer development focuses on
+patient-aware single-cell analysis.
 
 ### Citation
 > Discriminatory power of combinatorial antigen recognition in cancer T cell therapies.
