@@ -1,0 +1,143 @@
+source,sample_type,atlas_cell_type_coarse,combo,n_cells,n_combo_positive,pct_combo_positive,n_patients,median_patient_pct_combo_positive,pct_patients_with_combo
+ICBI integrated CRC atlas,adjacent normal,B cell,ABCA12+NOX1,72559,0,0.0,205,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,B cell,AGTR1+GRIN2D+NOX1,72559,0,0.0,205,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Epithelial cell,ABCA12+NOX1,205061,116,0.056568533265711186,196,0.0,10.714285714285714
+ICBI integrated CRC atlas,adjacent normal,Epithelial cell,AGTR1+GRIN2D+NOX1,205061,0,0.0,196,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Granulocyte,ABCA12+NOX1,12082,0,0.0,174,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Granulocyte,AGTR1+GRIN2D+NOX1,12082,0,0.0,174,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,ILC,ABCA12+NOX1,1006,0,0.0,114,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,ILC,AGTR1+GRIN2D+NOX1,1006,0,0.0,114,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Myeloid cell,ABCA12+NOX1,21871,0,0.0,202,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Myeloid cell,AGTR1+GRIN2D+NOX1,21871,0,0.0,202,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,NK cell,ABCA12+NOX1,3029,0,0.0,184,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,NK cell,AGTR1+GRIN2D+NOX1,3029,0,0.0,184,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Plasma cell,ABCA12+NOX1,164107,0,0.0,212,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Plasma cell,AGTR1+GRIN2D+NOX1,164107,0,0.0,212,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Schwann cell,ABCA12+NOX1,6707,0,0.0,140,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Schwann cell,AGTR1+GRIN2D+NOX1,6707,0,0.0,140,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Stromal cell,ABCA12+NOX1,70383,0,0.0,175,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,Stromal cell,AGTR1+GRIN2D+NOX1,70383,0,0.0,175,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,T cell,ABCA12+NOX1,213004,0,0.0,222,0.0,0.0
+ICBI integrated CRC atlas,adjacent normal,T cell,AGTR1+GRIN2D+NOX1,213004,0,0.0,222,0.0,0.0
+ICBI integrated CRC atlas,blood,B cell,ABCA12+NOX1,41456,0,0.0,58,0.0,0.0
+ICBI integrated CRC atlas,blood,B cell,AGTR1+GRIN2D+NOX1,41456,0,0.0,58,0.0,0.0
+ICBI integrated CRC atlas,blood,Cancer cell,ABCA12+NOX1,2929,0,0.0,19,0.0,0.0
+ICBI integrated CRC atlas,blood,Cancer cell,AGTR1+GRIN2D+NOX1,2929,0,0.0,19,0.0,0.0
+ICBI integrated CRC atlas,blood,Granulocyte,ABCA12+NOX1,27463,0,0.0,51,0.0,0.0
+ICBI integrated CRC atlas,blood,Granulocyte,AGTR1+GRIN2D+NOX1,27463,0,0.0,51,0.0,0.0
+ICBI integrated CRC atlas,blood,ILC,ABCA12+NOX1,178,0,0.0,24,0.0,0.0
+ICBI integrated CRC atlas,blood,ILC,AGTR1+GRIN2D+NOX1,178,0,0.0,24,0.0,0.0
+ICBI integrated CRC atlas,blood,Myeloid cell,ABCA12+NOX1,74140,1,0.001348799568384138,68,0.0,1.4705882352941175
+ICBI integrated CRC atlas,blood,Myeloid cell,AGTR1+GRIN2D+NOX1,74140,1,0.001348799568384138,68,0.0,1.4705882352941175
+ICBI integrated CRC atlas,blood,NK cell,ABCA12+NOX1,38127,0,0.0,61,0.0,0.0
+ICBI integrated CRC atlas,blood,NK cell,AGTR1+GRIN2D+NOX1,38127,0,0.0,61,0.0,0.0
+ICBI integrated CRC atlas,blood,Plasma cell,ABCA12+NOX1,7141,0,0.0,56,0.0,0.0
+ICBI integrated CRC atlas,blood,Plasma cell,AGTR1+GRIN2D+NOX1,7141,0,0.0,56,0.0,0.0
+ICBI integrated CRC atlas,blood,T cell,ABCA12+NOX1,347146,2,0.000576126471282976,74,0.0,2.7027027027027026
+ICBI integrated CRC atlas,blood,T cell,AGTR1+GRIN2D+NOX1,347146,0,0.0,74,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,B cell,ABCA12+NOX1,23751,0,0.0,80,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,B cell,AGTR1+GRIN2D+NOX1,23751,0,0.0,80,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Epithelial cell,ABCA12+NOX1,204893,192,0.09370744730176239,113,0.0,36.283185840707965
+ICBI integrated CRC atlas,healthy normal,Epithelial cell,AGTR1+GRIN2D+NOX1,204893,9,0.004392536592270112,113,0.0,6.1946902654867255
+ICBI integrated CRC atlas,healthy normal,Granulocyte,ABCA12+NOX1,5187,0,0.0,86,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Granulocyte,AGTR1+GRIN2D+NOX1,5187,0,0.0,86,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,ILC,ABCA12+NOX1,1467,0,0.0,44,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,ILC,AGTR1+GRIN2D+NOX1,1467,0,0.0,44,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Myeloid cell,ABCA12+NOX1,12925,0,0.0,86,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Myeloid cell,AGTR1+GRIN2D+NOX1,12925,0,0.0,86,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,NK cell,ABCA12+NOX1,2164,0,0.0,59,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,NK cell,AGTR1+GRIN2D+NOX1,2164,0,0.0,59,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Plasma cell,ABCA12+NOX1,125802,0,0.0,106,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Plasma cell,AGTR1+GRIN2D+NOX1,125802,0,0.0,106,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Schwann cell,ABCA12+NOX1,1944,0,0.0,36,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Schwann cell,AGTR1+GRIN2D+NOX1,1944,0,0.0,36,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Stromal cell,ABCA12+NOX1,29077,0,0.0,78,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,Stromal cell,AGTR1+GRIN2D+NOX1,29077,0,0.0,78,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,T cell,ABCA12+NOX1,77104,0,0.0,103,0.0,0.0
+ICBI integrated CRC atlas,healthy normal,T cell,AGTR1+GRIN2D+NOX1,77104,0,0.0,103,0.0,0.0
+ICBI integrated CRC atlas,lymph node,B cell,ABCA12+NOX1,32384,0,0.0,29,0.0,0.0
+ICBI integrated CRC atlas,lymph node,B cell,AGTR1+GRIN2D+NOX1,32384,0,0.0,29,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Cancer cell,ABCA12+NOX1,2047,1,0.048851978505129456,11,0.0,9.090909090909092
+ICBI integrated CRC atlas,lymph node,Cancer cell,AGTR1+GRIN2D+NOX1,2047,0,0.0,11,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Epithelial cell,ABCA12+NOX1,444,0,0.0,10,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Epithelial cell,AGTR1+GRIN2D+NOX1,444,0,0.0,10,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Granulocyte,ABCA12+NOX1,242,0,0.0,20,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Granulocyte,AGTR1+GRIN2D+NOX1,242,0,0.0,20,0.0,0.0
+ICBI integrated CRC atlas,lymph node,ILC,ABCA12+NOX1,82,0,0.0,11,0.0,0.0
+ICBI integrated CRC atlas,lymph node,ILC,AGTR1+GRIN2D+NOX1,82,0,0.0,11,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Myeloid cell,ABCA12+NOX1,3727,0,0.0,26,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Myeloid cell,AGTR1+GRIN2D+NOX1,3727,0,0.0,26,0.0,0.0
+ICBI integrated CRC atlas,lymph node,NK cell,ABCA12+NOX1,536,0,0.0,28,0.0,0.0
+ICBI integrated CRC atlas,lymph node,NK cell,AGTR1+GRIN2D+NOX1,536,0,0.0,28,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Plasma cell,ABCA12+NOX1,3101,0,0.0,22,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Plasma cell,AGTR1+GRIN2D+NOX1,3101,0,0.0,22,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Stromal cell,ABCA12+NOX1,3451,0,0.0,20,0.0,0.0
+ICBI integrated CRC atlas,lymph node,Stromal cell,AGTR1+GRIN2D+NOX1,3451,0,0.0,20,0.0,0.0
+ICBI integrated CRC atlas,lymph node,T cell,ABCA12+NOX1,67656,0,0.0,29,0.0,0.0
+ICBI integrated CRC atlas,lymph node,T cell,AGTR1+GRIN2D+NOX1,67656,0,0.0,29,0.0,0.0
+ICBI integrated CRC atlas,metastasis,B cell,ABCA12+NOX1,5099,0,0.0,56,0.0,0.0
+ICBI integrated CRC atlas,metastasis,B cell,AGTR1+GRIN2D+NOX1,5099,0,0.0,56,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Cancer cell,ABCA12+NOX1,156052,581,0.3723117935047292,73,0.0,34.24657534246575
+ICBI integrated CRC atlas,metastasis,Cancer cell,AGTR1+GRIN2D+NOX1,156052,48,0.030758977776638555,73,0.0,15.068493150684931
+ICBI integrated CRC atlas,metastasis,Epithelial cell,ABCA12+NOX1,898,2,0.22271714922048996,21,0.0,4.761904761904762
+ICBI integrated CRC atlas,metastasis,Epithelial cell,AGTR1+GRIN2D+NOX1,898,0,0.0,21,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Granulocyte,ABCA12+NOX1,10100,0,0.0,52,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Granulocyte,AGTR1+GRIN2D+NOX1,10100,0,0.0,52,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Hepatocyte,ABCA12+NOX1,1421,0,0.0,5,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Hepatocyte,AGTR1+GRIN2D+NOX1,1421,1,0.07037297677691766,5,0.0,20.0
+ICBI integrated CRC atlas,metastasis,ILC,ABCA12+NOX1,379,0,0.0,43,0.0,0.0
+ICBI integrated CRC atlas,metastasis,ILC,AGTR1+GRIN2D+NOX1,379,0,0.0,43,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Myeloid cell,ABCA12+NOX1,41282,0,0.0,59,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Myeloid cell,AGTR1+GRIN2D+NOX1,41282,0,0.0,59,0.0,0.0
+ICBI integrated CRC atlas,metastasis,NK cell,ABCA12+NOX1,3343,0,0.0,56,0.0,0.0
+ICBI integrated CRC atlas,metastasis,NK cell,AGTR1+GRIN2D+NOX1,3343,0,0.0,56,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Plasma cell,ABCA12+NOX1,6143,0,0.0,60,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Plasma cell,AGTR1+GRIN2D+NOX1,6143,0,0.0,60,0.0,0.0
+ICBI integrated CRC atlas,metastasis,Stromal cell,ABCA12+NOX1,25684,1,0.00389347453667653,49,0.0,2.0408163265306123
+ICBI integrated CRC atlas,metastasis,Stromal cell,AGTR1+GRIN2D+NOX1,25684,0,0.0,49,0.0,0.0
+ICBI integrated CRC atlas,metastasis,T cell,ABCA12+NOX1,154878,0,0.0,67,0.0,0.0
+ICBI integrated CRC atlas,metastasis,T cell,AGTR1+GRIN2D+NOX1,154878,0,0.0,67,0.0,0.0
+ICBI integrated CRC atlas,polyp,B cell,ABCA12+NOX1,3014,0,0.0,49,0.0,0.0
+ICBI integrated CRC atlas,polyp,B cell,AGTR1+GRIN2D+NOX1,3014,0,0.0,49,0.0,0.0
+ICBI integrated CRC atlas,polyp,Cancer cell,ABCA12+NOX1,30750,141,0.4585365853658536,97,0.0,39.175257731958766
+ICBI integrated CRC atlas,polyp,Cancer cell,AGTR1+GRIN2D+NOX1,30750,12,0.03902439024390244,97,0.0,9.278350515463918
+ICBI integrated CRC atlas,polyp,Epithelial cell,ABCA12+NOX1,61774,169,0.2735778806617671,97,0.11049723756906078,54.63917525773196
+ICBI integrated CRC atlas,polyp,Epithelial cell,AGTR1+GRIN2D+NOX1,61774,10,0.016188040275844206,97,0.0,8.24742268041237
+ICBI integrated CRC atlas,polyp,Granulocyte,ABCA12+NOX1,453,0,0.0,67,0.0,0.0
+ICBI integrated CRC atlas,polyp,Granulocyte,AGTR1+GRIN2D+NOX1,453,0,0.0,67,0.0,0.0
+ICBI integrated CRC atlas,polyp,ILC,ABCA12+NOX1,15,0,0.0,7,0.0,0.0
+ICBI integrated CRC atlas,polyp,ILC,AGTR1+GRIN2D+NOX1,15,0,0.0,7,0.0,0.0
+ICBI integrated CRC atlas,polyp,Myeloid cell,ABCA12+NOX1,950,0,0.0,65,0.0,0.0
+ICBI integrated CRC atlas,polyp,Myeloid cell,AGTR1+GRIN2D+NOX1,950,0,0.0,65,0.0,0.0
+ICBI integrated CRC atlas,polyp,NK cell,ABCA12+NOX1,106,0,0.0,34,0.0,0.0
+ICBI integrated CRC atlas,polyp,NK cell,AGTR1+GRIN2D+NOX1,106,0,0.0,34,0.0,0.0
+ICBI integrated CRC atlas,polyp,Plasma cell,ABCA12+NOX1,2719,0,0.0,77,0.0,0.0
+ICBI integrated CRC atlas,polyp,Plasma cell,AGTR1+GRIN2D+NOX1,2719,0,0.0,77,0.0,0.0
+ICBI integrated CRC atlas,polyp,Schwann cell,ABCA12+NOX1,3,0,0.0,3,0.0,0.0
+ICBI integrated CRC atlas,polyp,Schwann cell,AGTR1+GRIN2D+NOX1,3,0,0.0,3,0.0,0.0
+ICBI integrated CRC atlas,polyp,Stromal cell,ABCA12+NOX1,267,0,0.0,53,0.0,0.0
+ICBI integrated CRC atlas,polyp,Stromal cell,AGTR1+GRIN2D+NOX1,267,0,0.0,53,0.0,0.0
+ICBI integrated CRC atlas,polyp,T cell,ABCA12+NOX1,6907,0,0.0,83,0.0,0.0
+ICBI integrated CRC atlas,polyp,T cell,AGTR1+GRIN2D+NOX1,6907,0,0.0,83,0.0,0.0
+ICBI integrated CRC atlas,primary tumor,B cell,ABCA12+NOX1,116671,2,0.0017142220431812533,382,0.0,0.5235602094240838
+ICBI integrated CRC atlas,primary tumor,B cell,AGTR1+GRIN2D+NOX1,116671,1,0.0008571110215906267,382,0.0,0.2617801047120419
+ICBI integrated CRC atlas,primary tumor,Cancer cell,ABCA12+NOX1,476624,2827,0.5931300144348585,391,0.0,45.78005115089514
+ICBI integrated CRC atlas,primary tumor,Cancer cell,AGTR1+GRIN2D+NOX1,476624,104,0.0218201349491423,391,0.0,6.3938618925831205
+ICBI integrated CRC atlas,primary tumor,Epithelial cell,ABCA12+NOX1,3303,33,0.9990917347865577,231,0.0,3.0303030303030303
+ICBI integrated CRC atlas,primary tumor,Epithelial cell,AGTR1+GRIN2D+NOX1,3303,26,0.7871631849833485,231,0.0,2.1645021645021645
+ICBI integrated CRC atlas,primary tumor,Granulocyte,ABCA12+NOX1,55294,1,0.0018085144862010345,342,0.0,0.29239766081871343
+ICBI integrated CRC atlas,primary tumor,Granulocyte,AGTR1+GRIN2D+NOX1,55294,0,0.0,342,0.0,0.0
+ICBI integrated CRC atlas,primary tumor,ILC,ABCA12+NOX1,1860,0,0.0,239,0.0,0.0
+ICBI integrated CRC atlas,primary tumor,ILC,AGTR1+GRIN2D+NOX1,1860,0,0.0,239,0.0,0.0
+ICBI integrated CRC atlas,primary tumor,Myeloid cell,ABCA12+NOX1,157100,21,0.01336728198599618,392,0.0,1.7857142857142856
+ICBI integrated CRC atlas,primary tumor,Myeloid cell,AGTR1+GRIN2D+NOX1,157100,11,0.007001909611712286,392,0.0,1.0204081632653061
+ICBI integrated CRC atlas,primary tumor,NK cell,ABCA12+NOX1,16892,0,0.0,381,0.0,0.0
+ICBI integrated CRC atlas,primary tumor,NK cell,AGTR1+GRIN2D+NOX1,16892,0,0.0,381,0.0,0.0
+ICBI integrated CRC atlas,primary tumor,Plasma cell,ABCA12+NOX1,200095,5,0.0024988130637946973,375,0.0,0.5333333333333333
+ICBI integrated CRC atlas,primary tumor,Plasma cell,AGTR1+GRIN2D+NOX1,200095,6,0.002998575676553637,375,0.0,0.8
+ICBI integrated CRC atlas,primary tumor,Schwann cell,ABCA12+NOX1,6698,0,0.0,195,0.0,0.0
+ICBI integrated CRC atlas,primary tumor,Schwann cell,AGTR1+GRIN2D+NOX1,6698,0,0.0,195,0.0,0.0
+ICBI integrated CRC atlas,primary tumor,Stromal cell,ABCA12+NOX1,195553,8,0.004090962552351536,341,0.0,1.7595307917888565
+ICBI integrated CRC atlas,primary tumor,Stromal cell,AGTR1+GRIN2D+NOX1,195553,5,0.0025568515952197105,341,0.0,1.1730205278592376
+ICBI integrated CRC atlas,primary tumor,T cell,ABCA12+NOX1,616229,22,0.0035701013746513065,417,0.0,1.1990407673860912
+ICBI integrated CRC atlas,primary tumor,T cell,AGTR1+GRIN2D+NOX1,616229,10,0.0016227733521142304,417,0.0,0.2398081534772182

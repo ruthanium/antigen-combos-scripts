@@ -1,0 +1,2 @@
+biomarker,anchor_source,epithelial_cells,tumor_cells,normal_cells,candidate_partners,eligible_partners,train_patients,test_patients
+CEACAM5,detected_RNA_surrogate,168295,113216,55079,105,20,43,19
