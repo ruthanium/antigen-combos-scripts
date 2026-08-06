@@ -29,5 +29,84 @@ To build the version used in the paper, download the 2015 release of RNAseq data
 4. Run the decision tree evaluations in `Evaluate.R` to calculate performance metrics (F1, precision, recall). Like cluster score calculations, this script may take a long time to run based on your computing resources and the size of the starting dataset.
 5. Use `Analyze.R` to process the top results and conduct the analysis carried out in the paper.
 
+### Python pipeline
+
+The computational R stages have also been ported to Python. The Python port
+uses CSV intermediates so that results can be inspected without R:
+
+```bash
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements-python.txt
+
+python src/CreateSketches.py
+python src/CalculateClusteringScores.py
+python src/Evaluate.py
+python src/Analyze.py
+```
+
+The complete doubles and triples search can be expensive. To validate the
+pipeline quickly, limit doubles and triples to 50 combinations per cancer:
+
+```bash
+python src/CalculateClusteringScores.py --test-run
+python src/Evaluate.py
+python src/Analyze.py
+```
+
+For a still smaller smoke test, process one cancer:
+
+```bash
+python src/CalculateClusteringScores.py --test-run --cancer "Acute Myeloid Leukemia"
+```
+
+Python outputs are written to `results/`:
+
+- `singles.csv`, `doubles.csv`, and `triples.csv`: clustering metrics
+- `*.total.csv`: clustering metrics plus held-out precision, recall, and F1
+- `top_*.csv` and `top_combinations.csv`: ranked, diversity-filtered results
+- `performance_summary.csv` and `f1_by_gate_size.png`: summary analysis
+
+The custom Davies–Bouldin calculation and the AND-gate evaluation logic are
+ported directly. Decision stumps use scikit-learn with settings matching the
+important `rpart` defaults, but exact thresholds can differ slightly between
+the two tree implementations.
+
+### Biomarker-anchored single-cell partner discovery
+
+`FindBiomarkerPartners.py` accepts an anchor biomarker and finds pairs of RNA
+partners for a three-input AND gate. It reports patient-level tumor and normal
+coverage and decodes each gate across the published epithelial cell clusters.
+Partner selection uses discovery patients only; complete patients are held out
+for testing. The top held-out gates are then tested in the independent ICBI CRC
+atlas after excluding the overlapping Pelka/GSE178341 dataset. Patient
+bootstrap confidence intervals are included for held-out coverage.
+
+```bash
+python src/FindBiomarkerPartners.py \
+  --biomarker CEACAM5 \
+  --extra-genes GPR35 \
+  --top-partners 20 \
+  --max-normal 0.01 \
+  --output-dir results/biomarker_partners/CEACAM5
+```
+
+By default, detected biomarker RNA is explicitly treated as a surrogate.
+Measured protein-positive cells can instead be supplied as a delimited file
+with a `cell_id`, `barcode`, or `cellID` column and an optional numeric column:
+
+```bash
+python src/FindBiomarkerPartners.py \
+  --biomarker CEACAM5 \
+  --protein-calls CEACAM5_protein_calls.tsv \
+  --protein-threshold 1.0
+```
+
+Outputs include `partner_ranking.csv`, `two_partner_gates.csv`,
+`two_partner_cluster_decode.csv`, `marker_expression_by_split.csv`,
+`heldout_marker_expression_by_cluster.csv`,
+`external_marker_expression.csv`, and `run_summary.csv`.
+
 ### User Agreement
 This code is released under a [Clear BSD License](https://github.com/ruthanium/antigen-combos-scripts/blob/master/LICENSE) and is intended for research/academic use only. For commercial use, please contact: Laurie Tzodikov (Assistant Director, Office of Technology Licensing), Princeton University, 609-258-7256.
