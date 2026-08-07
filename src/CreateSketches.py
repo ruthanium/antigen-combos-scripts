@@ -17,7 +17,7 @@ if "src" in currdir:
 
 # read in input matrix
 matAll = pd.read_csv(currdir + "../data/test-normalized-matrix.txt")
-cans = set(matAll.loc[matAll["type"] == "cancer", "tissue.cancer"].tolist())
+cans = sorted(set(matAll.loc[matAll["type"] == "cancer", "tissue.cancer"].tolist()))
 
 # make relevant directory structure
 if not os.path.exists(currdir + "../results"):
@@ -32,35 +32,28 @@ for can in cans:
 
     #subset and label
     mat = matAll.loc[(matAll["tissue.cancer"] == can),]
-    mat = mat.append(matAll.loc[(matAll["type"] == "tissue"),])
-    mat["cluster"] = 2
-    mat.loc[mat['tissue.cancer'] == can, "cluster"] = 1
+    mat = pd.concat([mat, matAll.loc[matAll["type"] == "tissue"]], ignore_index=True)
     N_samples = len(mat["tissue.cancer"])
 
     # remove unnecessary fields
     matt = mat.copy()
     matt.drop("batch", axis=1, inplace=True)
     matt.drop("type", axis=1, inplace=True)
-    matt.drop("cluster", axis=1, inplace=True)
     matt.drop("tissue.cancer", axis=1, inplace=True)
     matt.set_index('dataset', inplace=True)
     mattm = matt.values
 
     # compute the PCs - necessary input for the sketching
-    U, s, Vt = pca(mattm, k=100)
-    X_dimred = U[:, :100] * s[:100]
+    n_components = min(100, min(mattm.shape))
+    U, s, Vt = pca(mattm, k=n_components)
+    X_dimred = U[:, :n_components] * s[:n_components]
 
     # sketch
     N = int(N_samples * sk_sz) # Number of samples to obtain from the dataset
-    sketch_index = gs(X_dimred, N, replace=False)
-    X_sketch = X_dimred[sketch_index]
-
-    # get the samples selected in the sketch and output
-    reduced = pd.DataFrame(X_sketch)
-    pca_out = pd.DataFrame(X_dimred)
-    pca_out["dataset"] = list(matt.index)
-    red_with_labs = pd.merge(pca_out, reduced, how="inner", on=list(reduced.columns.values))
-    selected = list(red_with_labs["dataset"])
+    sketch_index = gs(X_dimred, N, replace=False, seed=0)
+    # Get the sample identifiers directly from the selected row indices.
+    # This avoids ambiguous floating-point joins when PCA coordinates repeat.
+    selected = list(matt.index[sketch_index])
 
     out = open(currdir + "../results/sketches/" + can.lower().replace(" ", "-") + "-sketch.txt", "w")
     for elm in selected:

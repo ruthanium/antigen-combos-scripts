@@ -1,0 +1,6 @@
+,f1,f1,f1,prec,prec,prec,rec,rec,rec
+,count,median,mean,count,median,mean,count,median,mean
+category,,,,,,,,,
+double,0,,,0,,,128,0.0,0.0
+single,120,0.410786,0.429718,121,0.381443,0.44691,525,0.0,0.123559
+triple,0,,,0,,,109,0.0,0.0
